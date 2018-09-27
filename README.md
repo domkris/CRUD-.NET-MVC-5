@@ -6,10 +6,9 @@
 U gornjem djelu je vidljiva tražilica za produkte po njihovim imenima, a klikanjem imena stupaca može se sortirat svaki stupac.
 </br>
 <ul>
-<li>Line 1</li>
-<li>Line 2</li>
+<li>Vidljivi su samo produkti za koje je isActive = true</li>
+<li>Odabirom Delete tipke isActive postaje false i taj produkt više nije prikazan u Index view-u, ali i dalje postoje u tablici dbo.Product</li>
 </ul>
-Vidljivi su samo projekti za koje je isActive = true, odabirom Delete tipke isActive postaje false i oni više nisu prikazani u Index view-u, ali i dalje postoje u tablici dbo.Product
 </br>
 
 Index VIEW</br>
