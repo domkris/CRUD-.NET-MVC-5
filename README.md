@@ -1,7 +1,7 @@
 # ProgramTest2
 </br>
 
-![promisechains](https://github.com/domkris/files/blob/master/index2_pt2.png?raw=true)
+![promisechains](https://github.com/domkris/files/blob/master/index_pt2.png?raw=true)
 
 </br>
 
