@@ -2,11 +2,12 @@
 
 
 </br>
-Index VIEW</br>
+</br>
 U gornjem djelu je vidljiva tražilica za produkte po njihovim imenima, a klikanjem imena stupaca može se sortirat svaki stupac.
 </br>
 Vidljivi su samo projekti za koje je isActive = true, odabirom Delete tipke isActive postaje false i oni više nisu prikazani u Index view-u, ali i dalje postoje u tablici dbo.Product
 </br>
+Index VIEW</br>
 
 ![promisechains](https://github.com/domkris/files/blob/master/index_pt2.png?raw=true)
 
