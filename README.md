@@ -4,6 +4,7 @@
 </br>
 Index VIEW</br>
 U gornjem djelu je vidljiva tražilica za produkte po njihovim imenima, a klikanjem imena stupaca može se sortirat svaki stupac.
+</br>
 
 ![promisechains](https://github.com/domkris/files/blob/master/index_pt2.png?raw=true)
 
