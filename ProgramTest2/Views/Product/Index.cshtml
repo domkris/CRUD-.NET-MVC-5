@@ -1,0 +1,155 @@
+﻿@model IEnumerable<ProgramTest2.Models.Product>
+@using ProgramTest2.Models;
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Products: </h2>
+<br />
+<input type="text"  class="form-control" id="productInput" onkeyup="productSearchFunction()" placeholder="Search for product name.." title="Type in a product name">
+<br />
+<table id="productTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col" onclick="sortTable(0)">Name</th>
+            <th scope="col" onclick="sortTable(1)">Price</th>
+            <th scope="col" onclick="sortTable(2)">Category Name</th>
+            <th scope="col" onclick="sortTable(3)">IsActive</th>
+            <th scope="col" onclick="sortTable(4)">Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product product in @Model)
+        {
+          
+        <tr id="row_@product.Id">
+            <td>
+                <div class="inputSwitch">
+                    <span id="span_@product.Id">@product.Name</span>
+                    <input id="input_@product.Id" />
+                    <a onclick="inputSwitch(@product.Id)">Uredi</a>
+                </div>
+            </td>
+            <td id="productPrice">@product.Price</td>
+            <td id="productCategoryId" hidden>@product.Category.Id</td>
+            <td>@product.Category.Name</td>
+            <td>@product.IsActive</td>
+            <td>@product.Created</td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = product.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Create", "Create", new { id = product.Id },new { @class = "btn btn-success" })
+                @Html.ActionLink("Edit", "Edit", new { id = product.Id }, new { @class="btn btn-default"})
+                <a href="#" class="btn btn-danger" onclick="confirmDelete(@product.Id)"><i class="glyphicon glyphicon-trash"> Delete</i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+
+    function inputSwitch(Id) {
+        var $this = $("#span_"+Id);
+        $this.hide().siblings("input").val($this.text()).show();
+    }
+    
+    $(".inputSwitch input").on("blur", function () {
+        var $this = $(this);
+        $this.hide().siblings("span").text($this.val()).show();
+    }).hide();
+
+    $(".inputSwitch input").on("keydown", function (event) {
+        var inputId = $(this).attr("Id");
+        var id = inputId.replace("input_", "");
+        var model = { Id: id, Name: $(this).val(), Price: $("#productPrice").html(), CategoryId: $("#productCategoryId").html(), IsActive: null, Created: null, Modified: null }
+        if (event.key == "Enter") {
+            $.ajax({
+                type: "POST",
+                url: "/Product/Edit",
+                data: model
+            });     
+        }
+        if (event.key == "Tab") {
+            $.ajax({
+                type: "POST",
+                url: "/Product/Edit",
+                data: model
+            });    
+        }
+    });
+
+    function productSearchFunction()
+    {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("productInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("productTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("productTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+    function confirmDelete(Id) {
+        $.ajax({
+            type: "POST",
+            url: "/Product/Delete",
+            data: { Id: Id },
+            success: function (result) {
+                $("#row_" + Id).remove();
+            }
+        })
+    }
+</script>

@@ -1,0 +1,35 @@
+﻿@model ProgramTest2.Models.Product
+@{
+    ViewBag.Title = "Details";
+}
+<h2>@Model.Name details:</h2>
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category Id</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">IsActive</th>
+            <th scope="col">Created</th>
+            <th scope="col">Modified</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.Name</td>
+            <td>@Model.Price</td>
+            <td>@Model.CategoryId</td>
+            <td>@Model.Category.Name</td>
+            <td>@Model.IsActive</td>
+            <td>@Model.Created</td>
+            <td>@Model.Modified</td>
+            <td>
+                <a href="javascript:history.back()">Go back</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

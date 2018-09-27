@@ -1,0 +1,54 @@
+﻿@model ProgramTest2.Models.Product
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit @Model.Name</h2>
+<br />
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post))
+{
+<table class="table" cellpadding="0" cellspacing="0">
+    <tr>
+        <th colspan="2" align="center">Product Details</th>
+    </tr>
+    <tr>
+        <td>Name: </td>
+        <td>
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "error" })
+        </td>
+    </tr>
+    <tr>
+        <td>Price: </td>
+        <td>
+            @Html.TextBoxFor(m => m.Price)
+        </td>
+    </tr>
+    <tr>
+        <td>Category: </td>
+        <td>
+            @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "error" })
+        </td>
+    </tr>
+    <tr>
+        <td>Created at: </td>
+        <td>
+            @Model.Created
+        </td>
+    </tr>
+    <tr>
+        <td>Last modified at: </td>
+        <td>
+            @Model.Modified
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Submit" class="btn btn-info"/></td>
+    </tr>
+</table>
+    <a href="javascript:history.back()">Go back</a>
+}
+
+
